@@ -20,19 +20,25 @@ This has been tested with the
 [Nordic nRF52840 Dongle](https://www.digikey.com/product-detail/en/nordic-semiconductor-asa/NRF52840-DONGLE/1490-1073-ND/9491124)
 though there are many alternatives that also work.
 
-# High level instructions:
+# High Level Instructions
 
-- Update `report_map.h` with the HID report.
 - Update `peripheral_mac` in `main.c` with the MAC address of the peripheral.
-- Update `ble_gap_sec_params_t` in `main.c` with the security parameters of
-  your peripheral. You may want to disable passkey authentication if the
-  peripheral doesn't support it.
+- Update `ble_gap_sec_params_t` in `main.c` to match the security parameters of
+  your peripheral. In particular, you may want to disable passkey authentication
+  and/or LESC if the peripheral doesn't support it.
+- Update `report_map.h` with the HID report of the peripheral. Note that this
+  project makes no attempt to parse the peripheral's HID report and will not do
+  any translation/conversion. Note that you may want to do this after bonding if
+  passkey authentication is necessary (otherwise you also have to update
+  `passkey_output_char` accordingly).
 - Copy `examples/ble_central/ble_app_hrs_c/pca10056/s140/config/sdk_config.h` to
   `pca10059/s140/config/sdk_config.h` in this repository.
-- Run `make` in `pca10059/s140/armgcc`.
+- Run `make` in `pca10059/s140/armgcc` and flash compiled firmware to device.
+- If using passkey authentication, the USB dongle will "display" the passcode by
+  typing it.
+- If necessary, press white button (P1.06) to delete bond with peripheral.
 
 # Known Issues
 
-- This makes no attempt at parsing the HID report.
 - This doesn't work for the MacOS FileVault (though I suspect that is due to
   some broader issue with the Nordic nRF52840).
