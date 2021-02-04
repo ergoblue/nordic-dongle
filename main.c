@@ -350,9 +350,9 @@ int main(void) {
 	peer_manager_init();
 
 	// Initialize service discovery module.
-    ble_db_discovery_init_t db_init = {
-    	.evt_handler  = db_disc_handler,
-    	.p_gatt_queue = &ble_gatt_queue,
+	ble_db_discovery_init_t db_init = {
+		.evt_handler  = db_disc_handler,
+		.p_gatt_queue = &ble_gatt_queue,
 	};
 	APP_ERROR_CHECK(ble_db_discovery_init(&db_init));
 	APP_ERROR_CHECK(ble_db_discovery_evt_register(&hids_uuid));
